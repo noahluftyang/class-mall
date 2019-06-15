@@ -31,12 +31,28 @@ const ProductItemCard = styled(ItemCard)`
   padding: 6px;
 `;
 
+const AddToCartButton = styled.button`
+  background-color: #fd8b2c;
+  color: #fff;
+  font-size: 16px;
+
+  &:disabled {
+    color: #eee;
+  }
+`;
+
+const RemoveFromCartButton = styled.button`
+  background-color: #fff;
+  border-color: #ef9a9a;
+  color: #ef9a9a;
+`;
+
 const ProductsView = memo(() => {
   const { addWishlistItem, removeWishlistItem, wishlistItems } = useContext(WishlistContext);
   const [page, setPage] = useState(1);
   const { productItems, totalCount } = useProductItems();
 
-  const handleAddClick = useCallback(
+  const handleAddButtonClick = useCallback(
     e => {
       const { value } = e.currentTarget;
       const wishlistItem = productItems.find(productItem => productItem.id === value);
@@ -45,7 +61,7 @@ const ProductsView = memo(() => {
     [addWishlistItem, productItems]
   );
 
-  const handleRemoveClick = useCallback(
+  const handleRemoveButtonClick = useCallback(
     e => {
       const { value } = e.currentTarget;
       removeWishlistItem(value);
@@ -53,14 +69,14 @@ const ProductsView = memo(() => {
     [removeWishlistItem]
   );
 
-  const handlePageChange = useCallback(page => {
+  const handlePageClick = useCallback(page => {
     setPage(page);
   }, []);
 
   return (
     <ProductsWrapper>
       <Helmet>
-        <title>클래스</title>
+        <title>클래스 신청하기</title>
       </Helmet>
       <ProductItemList>
         {productItems
@@ -70,9 +86,6 @@ const ProductsView = memo(() => {
               wishlistItem => wishlistItem.id === id
             );
             const isDisabled = !isWishlistItemsHaveProductItem && wishlistItems.length >= 3;
-            const handleButtonClick = isWishlistItemsHaveProductItem
-              ? handleRemoveClick
-              : handleAddClick;
 
             return (
               <ProductItemCard
@@ -81,14 +94,20 @@ const ProductsView = memo(() => {
                 price={price}
                 title={title}
               >
-                <button disabled={isDisabled} onClick={handleButtonClick} value={id}>
-                  {isWishlistItemsHaveProductItem ? '빼기' : '담기'}
-                </button>
+                {isWishlistItemsHaveProductItem ? (
+                  <RemoveFromCartButton onClick={handleRemoveButtonClick} value={id}>
+                    빼기
+                  </RemoveFromCartButton>
+                ) : (
+                  <AddToCartButton disabled={isDisabled} onClick={handleAddButtonClick} value={id}>
+                    담기
+                  </AddToCartButton>
+                )}
               </ProductItemCard>
             );
           })}
       </ProductItemList>
-      <Pagination onChange={handlePageChange} page={page} size={SIZE} totalCount={totalCount} />
+      <Pagination onPageClick={handlePageClick} page={page} size={SIZE} totalCount={totalCount} />
     </ProductsWrapper>
   );
 });

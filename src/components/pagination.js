@@ -1,40 +1,68 @@
 import styled from '@emotion/styled';
-import React, { memo, useCallback, useEffect, useReducer, useState } from 'react';
+import React, { memo, useCallback } from 'react';
 
 const PaginationWrapper = styled.div`
   display: flex;
+  justify-content: center;
+  padding: 12px;
 
   & > button:not(:first-of-type) {
     margin-left: 6px;
   }
 `;
 
-export const Pagination = memo(props => {
-  const { onChange, page, size, totalCount } = props;
+const PageButton = styled.button`
+  background-color: ${({ active }) => (active ? '#fd8b2c' : '#fff')};
+  border-color: #fd8b2c;
+  color: ${({ active }) => (active ? '#fff' : '#000')};
+`;
 
-  const decrementPage = () => {};
+export const Pagination = memo(({ onPageClick, page, size, totalCount }) => {
+  const totalPage = Math.ceil(totalCount / size);
+  const isPrevDisabled = page < 2;
+  const isNextDisabled = page > totalPage - 1;
 
-  const handlePage = e => {
-    const { value } = e.currentTarget;
-    const page = Number(value) || 1;
-    onChange && onChange(page);
-  };
+  const handlePrevButtonClick = useCallback(() => {
+    const newPage = page - 1;
+    onPageClick(newPage);
+  }, [onPageClick, page]);
 
-  const incrementPage = () => {};
+  const handlePageButtonClick = useCallback(
+    e => {
+      const { value } = e.currentTarget;
+      const page = Number(value) || 1;
+      onPageClick(page);
+    },
+    [onPageClick]
+  );
+
+  const handleNextButtonClick = useCallback(() => {
+    const newPage = page + 1;
+    onPageClick(newPage);
+  }, [onPageClick, page]);
 
   return (
     <PaginationWrapper>
-      <button onClick={decrementPage}>prev</button>
-      <button onClick={handlePage} value={1}>
-        1
-      </button>
-      <button onClick={handlePage} value={2}>
-        2
-      </button>
-      <button onClick={handlePage} value={3}>
-        3
-      </button>
-      <button onClick={incrementPage}>next</button>
+      <PageButton disabled={isPrevDisabled} onClick={handlePrevButtonClick}>
+        prev
+      </PageButton>
+      {[...Array(totalPage)].map((value, index) => {
+        const pageValue = index + 1;
+
+        return (
+          <PageButton
+            active={page === pageValue}
+            key={`page-${pageValue}`}
+            onClick={handlePageButtonClick}
+            value={pageValue}
+          >
+            {pageValue}
+          </PageButton>
+        );
+      })}
+      <PageButton disabled={isNextDisabled} onClick={handleNextButtonClick}>
+        next
+      </PageButton>
     </PaginationWrapper>
   );
 });
