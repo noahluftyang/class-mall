@@ -1,6 +1,7 @@
 import 'sanitize.css';
 import styled from '@emotion/styled';
 import React, { memo } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 import { GlobalStyles } from './components/global-styles';
 import { Header } from './components/header';
@@ -17,6 +18,7 @@ export const App = memo(() => {
   return (
     <WishlistProvider>
       <AppWrapper>
+        <Helmet titleTemplate="Class Mall | %s" />
         <GlobalStyles />
         <Header />
         <Routes />

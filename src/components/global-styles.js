@@ -8,6 +8,14 @@ const styles = css`
     word-break: keep-all;
   }
 
+  html {
+    font-size: 14px;
+  }
+
+  body {
+    font-size: 1rem;
+  }
+
   h1,
   h2,
   h3,
@@ -15,6 +23,18 @@ const styles = css`
   h5,
   h6 {
     margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  button {
+    border: 1px solid transparent;
+    border-radius: 3px;
+    cursor: pointer;
+    outline: 0;
+    padding: 6px 12px;
   }
 
   #root {
