@@ -1,9 +1,7 @@
 import { useCallback, useState } from 'react';
 
-import { productItems } from '../api/product-items';
-
 export function useWishlistItems() {
-  const [wishlistItems, setWishlistItems] = useState(productItems);
+  const [wishlistItems, setWishlistItems] = useState([]);
 
   const addWishlistItem = useCallback(
     wishlistItem => {

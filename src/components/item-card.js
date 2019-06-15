@@ -8,8 +8,9 @@ const ItemCardWrapper = styled.div`
 `;
 
 const CoverImage = styled.img`
-  max-height: 200px;
+  min-height: 150px;
   max-width: 100%;
+  object-fit: contain;
 `;
 
 export const ItemCard = memo(({ children, className, coverImage, id, price, title }) => (

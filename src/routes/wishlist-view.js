@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
-import React, { memo, useContext } from 'react';
+import React, { memo, useCallback, useContext } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { v4 } from 'uuid';
 
-import { ItemCard } from '../components/item-card';
+import { WishlistItemCard } from '../components/wishlist-item-card';
 import { WishlistContext } from '../contexts/wishlist';
 import { useCoupons } from '../hooks/use-coupons';
+import { useWishlistFormValues } from '../hooks/use-wishlist-form-values';
+import { formatPrice } from '../utils/format-price';
 
 const WishlistWrapper = styled.section`
   margin: 0 auto;
@@ -15,43 +16,80 @@ const WishlistWrapper = styled.section`
   }
 `;
 
-const WishlistItemList = styled.div`
+const WishlistItemForm = styled.form`
   display: grid;
   row-gap: 12px;
 `;
 
 const WishlistItemHeader = styled.div`
-  background-color: #ececec;
+  background-color: #ddd;
   column-gap: 6px;
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: 1fr repeat(4, 100px);
+  grid-template-columns: 1fr 100px repeat(2, 150px) 100px;
   padding: 6px;
 `;
 
-const WishlistItemCard = styled(ItemCard)`
+const FormSubmissionWrapper = styled.div`
   align-items: center;
-  column-gap: 6px;
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 200px 1fr repeat(4, 100px);
-  padding: 6px;
+  background-color: #fff;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  min-height: 48px;
+  padding: 12px;
+  position: sticky;
+
+  & > *:not(:last-child) {
+    margin-right: 6px;
+  }
+`;
+
+const SubmitButton = styled.button`
+  background-color: #fd8b2c;
+  color: #fff;
+  font-size: 16px;
+  height: 48px;
 `;
 
 const WishlistView = memo(() => {
   const { wishlistItems } = useContext(WishlistContext);
   const coupons = useCoupons();
+  const { formValues, setDiscount, setIsPurchase, setQuantity } = useWishlistFormValues(
+    wishlistItems
+  );
+  const paymentPrice = formValues.reduce(
+    (result, { calculatedPrice, isPurchase }) => (isPurchase ? result + calculatedPrice : result),
+    0
+  );
+  const options = [
+    {
+      label: '쿠폰 적용안함',
+      type: null,
+      value: null,
+    },
+    ...coupons.map(({ discountAmount, discountRate, title, type }) => ({
+      label: title,
+      type,
+      value: type === 'amount' ? discountAmount : discountRate,
+    })),
+  ];
 
-  const handleChange = (e, f, g) => {
-    console.log(e.currentTarget.value, e, f, g);
-  };
+  const handleSubmit = useCallback(
+    e => {
+      console.log(formValues);
+      alert(`submit: ${JSON.stringify(formValues)}`);
+      e.preventDefault();
+    },
+    [formValues]
+  );
 
   return (
     <WishlistWrapper>
       <Helmet>
         <title>장바구니</title>
       </Helmet>
-      <WishlistItemList>
+      <WishlistItemForm onSubmit={handleSubmit}>
         <WishlistItemHeader>
           <h4>상품 정보</h4>
           <h4>상품 금액</h4>
@@ -59,34 +97,26 @@ const WishlistView = memo(() => {
           <h4>쿠폰 적용</h4>
           <h4>주문 금액</h4>
         </WishlistItemHeader>
-        {wishlistItems.map(({ availableCoupon = true, coverImage, id, price, title }) => (
-          <WishlistItemCard
-            coverImage={coverImage}
-            key={`product-item-${id}`}
-            price={price}
-            title={title}
-          >
-            {/* <input type="checkbox" /> */}
-            <label>
-              <span>수량</span>
-              <input defaultValue={1} type="number" />
-            </label>
-            <select disabled={!availableCoupon} onChange={handleChange}>
-              <option value={null}>쿠폰 적용안함</option>
-              {coupons.map(({ title }) => {
-                const key = v4();
-
-                return (
-                  <option key={key} value={10}>
-                    {title}
-                  </option>
-                );
-              })}
-            </select>
-            <p>0</p>
-          </WishlistItemCard>
-        ))}
-      </WishlistItemList>
+        {formValues.length ? (
+          formValues.map(({ id, ...formValue }, index) => (
+            <WishlistItemCard
+              {...formValue}
+              index={index}
+              key={`product-item-${id}`}
+              onCheckboxChange={setIsPurchase}
+              onInputChange={setQuantity}
+              onSelectChange={setDiscount}
+              options={options}
+            />
+          ))
+        ) : (
+          <span>장바구니가 비어있습니다.</span>
+        )}
+        <FormSubmissionWrapper>
+          <strong>결제금액: {formatPrice(paymentPrice)}</strong>
+          <SubmitButton type="submit">결제하기</SubmitButton>
+        </FormSubmissionWrapper>
+      </WishlistItemForm>
     </WishlistWrapper>
   );
 });
