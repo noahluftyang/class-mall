@@ -22,20 +22,10 @@
     "@types/react-dom": "16.8.4",
     "@types/react-router-dom": "4.3.4",
     "eslint-plugin-react-hooks": "1.6.0",
+    "husky": "2.4.1",
+    "lint-staged": "8.2.1",
     "prettier": "1.18.2",
     "typescript": "3.5.2"
   },
-  "private": true,
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "private": true
 }
