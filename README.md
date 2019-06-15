@@ -1,4 +1,23 @@
+# class-mall
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a7a9669e-3807-4219-8fb0-007753ceae17/deploy-status)](https://app.netlify.com/sites/class-mall/deploys)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Prerequisite
+
+In order to develop this project,
+
+- We recommend you to install **node.js v10.14** or higher.
+
+## Installation
+
+```sh
+  yarn
+
+  # or using npm
+  npm install
+```
 
 ## Available Scripts
 
@@ -66,3 +85,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+## License
+
+[MIT Licensed](./LICENSE)
