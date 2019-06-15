@@ -4,18 +4,19 @@ import React, { memo } from 'react';
 import { formatPrice } from '../utils/format-price';
 
 const ItemCardWrapper = styled.div`
-  border: 1px solid #333;
+  background-color: #fff;
 `;
 
 const CoverImage = styled.img`
   max-height: 200px;
+  max-width: 100%;
 `;
 
-export const ItemCard = memo(({ children, coverImage, id, price, title }) => (
-  <ItemCardWrapper key={`product-item-${id}`}>
+export const ItemCard = memo(({ children, className, coverImage, id, price, title }) => (
+  <ItemCardWrapper className={className} key={`product-item-${id}`}>
     <CoverImage alt={title} src={coverImage} />
     <h4>{title}</h4>
-    <p>가격: {formatPrice(price)}</p>
+    <p>{formatPrice(price)}</p>
     {children}
   </ItemCardWrapper>
 ));

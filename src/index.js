@@ -4,7 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { App } from './app';
-import { unregister } from './serviceWorker';
+import { unregister } from './service-worker';
 
 render(
   <Suspense fallback={<div>Loading...</div>}>

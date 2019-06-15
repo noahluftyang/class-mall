@@ -3,7 +3,7 @@ import { productItems } from './product-items';
 
 function fakeFetch(url, result) {
   return new Promise(resolve => {
-    setTimeout(() => resolve(result), 2000);
+    setTimeout(() => resolve(result), 1000);
   });
 }
 

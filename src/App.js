@@ -1,24 +1,26 @@
 import 'sanitize.css';
 import styled from '@emotion/styled';
 import React, { memo } from 'react';
-import { NavLink } from 'react-router-dom';
 
+import { GlobalStyles } from './components/global-styles';
+import { Header } from './components/header';
 import { Routes } from './routes';
+import { WishlistProvider } from './contexts/wishlist';
 
 const AppWrapper = styled.div`
+  background-color: #f0f0f0;
   height: 100%;
+  overflow: auto;
 `;
 
 export const App = memo(() => {
   return (
-    <AppWrapper>
-      <header>
-        <nav>
-          <NavLink to="/products">클래스</NavLink>
-          <NavLink to="/wishlist">장바구니</NavLink>
-        </nav>
-      </header>
-      <Routes />
-    </AppWrapper>
+    <WishlistProvider>
+      <AppWrapper>
+        <GlobalStyles />
+        <Header />
+        <Routes />
+      </AppWrapper>
+    </WishlistProvider>
   );
 });
