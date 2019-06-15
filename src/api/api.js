@@ -20,6 +20,7 @@ export async function readProductItems() {
   const response = {
     message: 'success',
     productItems,
+    totalCount: productItems.length,
   };
 
   return fakeFetch('/api/product/items', response);

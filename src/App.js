@@ -1,6 +1,7 @@
 import 'sanitize.css';
 import styled from '@emotion/styled';
 import React, { memo } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import { Routes } from './routes';
 
@@ -11,19 +12,12 @@ const AppWrapper = styled.div`
 export const App = memo(() => {
   return (
     <AppWrapper>
-      {/* <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
+      <header>
+        <nav>
+          <NavLink to="/products">클래스</NavLink>
+          <NavLink to="/wishlist">장바구니</NavLink>
+        </nav>
+      </header>
       <Routes />
     </AppWrapper>
   );
