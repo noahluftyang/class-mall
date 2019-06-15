@@ -10,7 +10,7 @@ import { useProductItems } from '../hooks/use-product-items';
 const SIZE = 5;
 
 const ProductsWrapper = styled.section`
-  margin: 0 auto;
+  margin: 72px auto;
 
   @media (min-width: 1024px) {
     max-width: 960px;

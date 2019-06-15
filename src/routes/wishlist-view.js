@@ -9,7 +9,7 @@ import { useWishlistFormValues } from '../hooks/use-wishlist-form-values';
 import { formatPrice } from '../utils/format-price';
 
 const WishlistWrapper = styled.section`
-  margin: 0 auto;
+  margin: 72px auto;
 
   @media (min-width: 1024px) {
     max-width: 960px;
@@ -26,7 +26,7 @@ const WishlistItemHeader = styled.div`
   column-gap: 6px;
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: 1fr 100px repeat(2, 150px) 100px;
+  grid-template-columns: 1fr 100px 80px 150px 100px;
   padding: 6px;
 `;
 

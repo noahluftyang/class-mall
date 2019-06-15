@@ -10,7 +10,7 @@ const WishlistItemCardWrapper = styled(ItemCard)`
   column-gap: 6px;
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: 200px 1fr 100px repeat(2, 150px) 100px;
+  grid-template-columns: 200px 1fr 100px 80px 150px 100px;
   padding: 6px;
   position: relative;
 `;
@@ -22,6 +22,9 @@ const PurchaseCheckbox = styled.input`
 `;
 
 const QuantityInput = styled.input`
+  border: 1px solid #b3b3b3;
+  border-radius: 3px;
+  padding: 10px;
   width: 100%;
 `;
 
