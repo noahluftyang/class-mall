@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "class-mall:debug",
+            "program": "${workspaceFolder}/node_modules/.bin/react-scripts",
+            "args": ["start"]
+        }
+    ]
+}
